@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>{{ page_title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/bulma.min.css" nonce="{{ csp_nonce() }}">
+    <link rel="stylesheet" href="/static/css/main.css" nonce="{{ csp_nonce() }}">
+    {% block extrahead %}{% endblock %}
+</head>
+
+<body>
+
+    <div class="columns">
+        <aside class="menu column is-one-third">
+            <p class="menu-label">
+                Navigation
+            </p>
+            <ul class="menu-list">
+                <li>
+                    {% set about_url = url_for("about") %}
+                    <a href="{{ about_url }}">Ghosts</a>
+                </li>
+            </ul>
+        </aside>
+
+        <content class="column">
+            <div class="content">
+                {% block body %}{% endblock %}
+            </div>
+        </content>
+    </div>
+
+</body>
+
+</html>

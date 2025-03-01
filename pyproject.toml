@@ -1,0 +1,22 @@
+[project]
+name = "ghostty-picker"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Your Name",email = "you@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "google-cloud-ndb (>=2.3.2,<3.0.0)",
+    "flask (>=3.1.0,<4.0.0)",
+    "google-auth (>=2.38.0,<3.0.0)",
+    "google-auth-oauthlib (>=1.2.1,<2.0.0)",
+    "secure-scaffold @ git+https://github.com/google/gae-secure-scaffold-python3.git",
+    "gunicorn (>=23.0.0,<24.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
