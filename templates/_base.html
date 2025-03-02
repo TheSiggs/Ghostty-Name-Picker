@@ -16,24 +16,50 @@
 <body>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">Ghost Picker</a>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container">
+            <!-- Brand Name -->
+            <a class="navbar-brand fw-bold" href="/">Ghost Picker</a>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Navbar Toggle Button for Mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">List Ghosts</a>
+                        <a class="nav-link fw-semibold text-white" href="/">List Ghosts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ghostpicker">
+                        <a class="nav-link fw-semibold text-white" href="/ghostpicker">
                             {% if has_ghost %}
-                                Change your phantom name
+                            Change your phantom name
                             {% else %}
-                                Get a phantom name
+                            Get a phantom name
                             {% endif %}
                         </a>
                     </li>
+
+                    <!-- User Dropdown (Optional) -->
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-semibold text-white" href="#" id="userDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ current_user.name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold text-white" href="/login">Login</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
