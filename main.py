@@ -105,7 +105,7 @@ def ghost_form():
 @app.route("/generate_names", methods=["POST"])
 def generate_names():
     with client.context():
-        ghosts = Ghost.query(ndb.OR(Ghost.email is None, Ghost.email == "")).fetch()
+        ghosts = Ghost.query(ndb.OR(Ghost.email == None, Ghost.email == "")).fetch()
 
         random_ghosts = random.sample(ghosts, min(3, len(ghosts)))
 

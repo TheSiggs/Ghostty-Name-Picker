@@ -7,7 +7,7 @@
         {% for ghost in ghosts %}
         <label class="list-group-item">
             <input type="radio" name="ghost_id" value="{{ ghost.key.id()}}" required>
-            {{ ghost.ghost_name }}
+            {{ first_name }} "{{ ghost.ghost_name }}" {{ last_name }}
         </label>
         {% endfor %}
     </div>
