@@ -1,0 +1,15 @@
+<form method="post" hx-post="/confirm_name" hx-target="body" hx-swap="outerHTML">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="first_name" value="{{ first_name }}">
+    <input type="hidden" name="last_name" value="{{ last_name }}">
+    <p>Select your ghost name:</p>
+    <div class="list-group">
+        {% for name in ghost_names %}
+        <label class="list-group-item">
+            <input type="radio" name="ghost_name" value="{{ name }}" required>
+            {{ name }}
+        </label>
+        {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-success mt-3">Confirm Name</button>
+</form>

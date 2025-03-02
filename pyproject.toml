@@ -13,7 +13,8 @@ dependencies = [
     "google-auth (>=2.38.0,<3.0.0)",
     "google-auth-oauthlib (>=1.2.1,<2.0.0)",
     "secure-scaffold @ git+https://github.com/google/gae-secure-scaffold-python3.git",
-    "gunicorn (>=23.0.0,<24.0.0)"
+    "gunicorn (>=23.0.0,<24.0.0)",
+    "flask-talisman (>=1.1.0,<2.0.0)",
 ]
 
 

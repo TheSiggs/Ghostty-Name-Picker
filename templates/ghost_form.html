@@ -1,0 +1,48 @@
+{% extends "_base.html" %}
+
+{% block body %}
+
+<h1 class="display-4">Ghost Form</h1>
+
+<!-- Bootstrap Form using HTMX -->
+<form method="post" hx-post="/generate_names" hx-target="#ghost-options" hx-trigger="submit" hx-swap="innerHTML" hx-on::after-request="openResultModal()">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+
+    <div class="mb-3">
+        <label for="first_name" class="form-label">First Name</label>
+        <input type="text" id="first_name" name="first_name" value="Alice" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="last_name" class="form-label">Last Name</label>
+        <input type="text" id="last_name" name="last_name" value="Alice" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Form</button>
+</form>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resultModalLabel">Choose a Ghost Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="ghost-options">
+                <!-- HTMX will inject options here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript to Open Modal Without `eval()` -->
+<script nonce="{{ csp_nonce() }}">
+    function openResultModal() {
+        let modal = new bootstrap.Modal(document.getElementById('resultModal'));
+        modal.show();
+    }
+</script>
+
+{% endblock body %}
+

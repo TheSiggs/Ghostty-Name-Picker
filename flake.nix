@@ -23,6 +23,10 @@
           ];
           shellHook = ''
             export LD_LIBRARY_PATH=${pkgs.gcc.cc.lib}/lib:$LD_LIBRARY_PATH
+            export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.config/gcloud/application_default_credentials.json"
+            export GOOGLE_CLOUD_PROJECT="ghostty-picker"
+            export FLASK_SETTINGS_FILENAME="settings.py"
+
             echo "Activating Poetry environment..."
             if [ ! -d ".venv" ]; then
               poetry install
