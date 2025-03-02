@@ -73,3 +73,19 @@ gcloud app browse
 2. **Select a ghost name**
 3. **Modify the ghost name if needed**
 4. **Confirm selection**
+
+
+## TODOs
+- Fix nonce generation
+- Add SEO
+- Add Accessibility
+- Improve responsiveness
+- Revamp styling/design
+- Add tests
+- Add CI/CD
+- Add linting and static analysis
+- Add structured logging
+- Dockerize (maybe?)
+- Add CLI tooling for data importing/exporting (currently an ad-hoc function)
+- Refactor functions out of main.py and into their respective model
+- Refactor project structure

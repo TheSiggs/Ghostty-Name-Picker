@@ -1,4 +1,5 @@
-from flask import request, url_for, redirect, session, jsonify
+from flask import request, url_for, redirect, session
+from markupsafe import escape
 import flask
 import securescaffold
 from google.cloud import ndb
@@ -9,7 +10,6 @@ import random
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from authlib.integrations.flask_client import OAuth
 import secrets
-from starlette.responses import RedirectResponse
 
 
 app = securescaffold.create_app(__name__)
@@ -89,7 +89,7 @@ def index():
     return flask.render_template("index.html", **context)
 
 
-@app.route("/ghostpicker", methods=["GET", "POST"])
+@app.route("/ghostpicker", methods=["GET"])
 @login_required
 def ghost_form():
     with client.context():
@@ -105,13 +105,20 @@ def ghost_form():
 @app.route("/generate_names", methods=["POST"])
 def generate_names():
     with client.context():
-        ghosts = Ghost.query(ndb.OR(Ghost.email == None, Ghost.email == "")).fetch()
+        ghosts = Ghost.query(ndb.OR(Ghost.email is None, Ghost.email == "")).fetch()
 
         random_ghosts = random.sample(ghosts, min(3, len(ghosts)))
+
+        first_name = escape(request.form.get("first_name"))
+        last_name = escape(request.form.get("last_name"))
+
+        if len(first_name) > 255 or len(last_name) > 255:
+            return "Invalid Names", 400
+
         context = {
             "ghosts": random_ghosts,
-            "first_name": request.form.get("first_name"),
-            "last_name": request.form.get("last_name"),
+            "first_name": first_name,
+            "last_name": last_name,
             "user": current_user.name if current_user.is_authenticated else None
         }
         print(random_ghosts)
@@ -122,22 +129,25 @@ def generate_names():
 @login_required
 def confirm_name():
     email = current_user.email
-    first_name = request.form.get("first_name")
-    last_name = request.form.get("last_name")
-    ghost_id = request.form.get("ghost_id")
+    first_name = escape(request.form.get("first_name"))
+    last_name = escape(request.form.get("last_name"))
+    ghost_id = int(escape(request.form.get("ghost_id")))
+
+    if len(first_name) > 255 or len(last_name) > 255:
+        return "Invalid Names", 400
 
     if not ghost_id:
         return "Invalid request: Missing ghost ID", 400
 
     with client.context():
         existing_ghost = Ghost.query(Ghost.email == email).get()
-        if existing_ghost and existing_ghost.key.id() != int(ghost_id):
+        if existing_ghost and existing_ghost.key.id() != ghost_id:
             existing_ghost.email = None
             existing_ghost.first_name = None
             existing_ghost.last_name = None
             existing_ghost.put()
 
-        ghost_key = ndb.Key(Ghost, int(ghost_id))
+        ghost_key = ndb.Key(Ghost, ghost_id)
         ghost = ghost_key.get()
         if ghost:
             ghost.first_name = first_name
