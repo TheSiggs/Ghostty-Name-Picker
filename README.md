@@ -3,6 +3,8 @@
 ## Overview
 Ghostty Picker is a Flask-based web application that allows users to log in via Google authentication and select or modify ghost names. The application is deployed on **Google App Engine** and uses **Google Cloud Datastore (NDB)** for storage.
 
+You can view it here! https://ghostty-picker.ts.r.appspot.com/
+
 ## Features
 - **Google OAuth 2.0 Authentication**
 - **Secure Flask Application with Flask-Talisman**
@@ -67,6 +69,7 @@ gcloud app deploy --no-cache
 ```sh
 gcloud app browse
 ```
+
 
 ## Usage
 1. **Log in using Google**
